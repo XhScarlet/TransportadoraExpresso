@@ -1,0 +1,75 @@
+CENÁRIO 1: Analisar se um frete de 45 km é viável
+
+1. Vá para: INEQUAÇÃO 1º GRAU - Viabilidade de Frete
+2. Preencha com seus dados:
+   - Ganho por KM: 10 (você recebe R$ 10 por km)
+   - Custo Fixo: -100 (custa R$ 100 para sair)
+3. Clique em "Resolver"
+4. Resultado: Lucrativo a partir de 10 km
+   Como seu frete é 45 km → ACEITE (lucro de R$ 350)
+
+
+
+CENÁRIO 2: Simular compra de um caminhão novo
+
+1. Vá para: JUROS SIMPLES - Financiamento de Caminhão
+2. Preencha com:
+   - Valor do Financiamento: 120000 (caminhão custa R$ 120 mil)
+   - Taxa de Juros: 1.2 (banco cobra 1,2% por mês)
+   - Tempo: 60 (60 meses = 5 anos)
+   - Tudo em: Mês
+3. Resultado: Total de R$ 163.200 para pagar
+   Juros: R$ 43.200
+4. Análise: Se o caminhão vai gerar R$ 1.000/mês de lucro extra
+   → Se paga em 43 meses, depois é lucro puro
+
+
+
+CENÁRIO 3: Quanto o lucro cresce se reinvestir?
+
+1. Vá para: JUROS COMPOSTOS - Reinvestimento de Lucros
+2. Preencha com:
+   - Lucro Mensal Inicial: 8000 (você tem R$ 8 mil de lucro inicial)
+   - Percentual de Retorno: 3 (reinveste tudo a 3% de retorno)
+   - Tempo: 24 (24 meses = 2 anos)
+   - Tudo em: Mês
+3. Resultado: R$ 16.158,09 em 24 meses
+   Crescimento: R$ 8.158,09 extra
+4. Se reinvestir em manutenção, frota cresce assim!
+
+
+
+CENÁRIO 4: Qual é o ponto de equilíbrio da operação?
+
+1. Vá para: EQUAÇÃO 1º GRAU - Ponto de Equilíbrio
+2. Preencha com seus dados fís:
+   - Lucro por Frete: 250 (você ganha R$ 250 por frete)
+   - Custo Fixo: -5000 (depósito, seguro, etc = R$ 5 mil/mês)
+3. Resultado: 20 fretes/mês para empatar
+4. Se consegue 30 fretes → Lucro de R$ 2.500 (20×250)
+
+
+
+CENÁRIO 5: Encontrar a faixa IDEAL de distância
+
+1. Vá para: INEQUAÇÃO 2º GRAU - Faixa de Distância
+2. Use seus dados de custos reais:
+   - a: -0.05 (custo combustível aumenta = parábola invertida)
+   - b: 15 (ganho base por km)
+   - c: 200 (lucro inicial)
+3. Resultado: Faixa ideal para lucro máximo
+   Exemplo: Entre 50-200 km
+4. Priorize fretes nessa faixa, recuse fora dela
+
+
+CENÁRIO 6: Organizar clientes em rotas
+
+1. Vá para: CONJUNTOS - Operações com Rotas
+2. Suas rotas:
+   - Rota A (SEGUNDA): 1, 2, 3, 4, 5
+   - Rota B (TERÇA): 3, 4, 5, 6, 7
+3. Clique em "Interseção (A ∩ B)"
+4. Resultado: {3, 4, 5}
+   Esses clientes podem receber segunda OU terça
+   Consolidar em uma rota é mais eficiente
+
