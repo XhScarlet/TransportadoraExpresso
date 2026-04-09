@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora da Transportadora Expresso</title>
+  <link rel="stylesheet" href="assets/css/calc.css?v=7">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1><span class="material-symbols-outlined">calculate</span> Calculadora Expresso</h1>
+        <p>Ferramentas matemáticas para gestão da transportadora</p>
+      </div>
+      <nav class="menu">
+        <button onclick="showPage('dashboard')" class="nav-btn active"><span class="material-symbols-outlined">home</span> Dashboard</button>
+        <button onclick="showPage('jurosCompostos')" class="nav-btn"><span class="material-symbols-outlined">trending_up</span> Reinvestimento de Lucros</button>
+        <button onclick="showPage('jurosSimples')" class="nav-btn"><span class="material-symbols-outlined">local_shipping</span> Financiamento de Caminhão</button>
+        <button onclick="showPage('eq1grau')" class="nav-btn"><span class="material-symbols-outlined">trending_flat</span> Ponto de Equilíbrio</button>
+        <button onclick="showPage('eq2grau')" class="nav-btn"><span class="material-symbols-outlined">route</span> Otimização de Rotas</button>
+        <button onclick="showPage('ineq1grau')" class="nav-btn"><span class="material-symbols-outlined">check_circle</span> Viabilidade de Frete</button>
+        <button onclick="showPage('ineq2grau')" class="nav-btn"><span class="material-symbols-outlined">bar_chart</span> Faixa de Lucratividade</button>
+        <button onclick="showPage('conjuntos')" class="nav-btn"><span class="material-symbols-outlined">hub</span> Operações com Rotas</button>
+      </nav>
+    </header>
+
+    <main class="content">
+      <div id="dashboard" class="page active">
+        <h2><span class="material-symbols-outlined">home</span> Dashboard de Cálculos</h2>
+        <p class="context-box"><span class="material-symbols-outlined" style="vertical-align: middle;">query_stats</span> Acompanhe todos os cálculos realizados para planejamento da frota.</p>
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3><span class="material-symbols-outlined">history</span> Últimos Cálculos</h3>
+            <div id="historico-list" style="max-height: 300px; overflow-y: auto;"></div>
+            <button onclick="limparHistorico()" class="btn-danger"><span class="material-symbols-outlined">delete_sweep</span> Limpar Histórico</button>
+          </div>
+          <div class="card">
+            <h3><span class="material-symbols-outlined">summarize</span> Resumo</h3>
+            <p><span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2rem;">done_all</span> Total de cálculos: <strong id="total-calc">0</strong></p>
+            <p><span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2rem;">update</span> Última operação: <strong id="ultima-op">Nenhuma</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="jurosCompostos" class="page">
+        <h2><span class="material-symbols-outlined">trending_up</span> Juros Compostos - Reinvestimento de Lucros</h2>
+        <p class="context-box">Simule como os lucros da frota crescem se forem reinvestidos mensalmente. Exemplo: Lucro inicial de R$ 5.000 com 2,5% de retorno ao mês.</p>
+        <p class="formula">M = C(1 + i)^t</p>
+        <div class="form-group">
+          <label>Lucro Mensal Inicial (R$) - Capital a reinvestir</label>
+          <input type="number" id="jc-capital" min="0" step="0.01" value="5000">
+        </div>
+        <div class="form-group">
+          <label>Percentual de Retorno (%/mês) - Taxa de lucro aplicada</label>
+          <input type="number" id="jc-taxa" min="0" step="0.01" value="2.5">
+        </div>
+     
+        <div class="form-group">
+          <label>Tempo de Reinvestimento (meses)</label>
+          <input type="number" id="jc-tempo" min="0" step="1" value="24">
+        </div>
+        <button onclick="calcularJurosCompostos()" class="btn-primary"><span class="material-symbols-outlined">calculate</span> Calcular</button>
+        <div id="jc-resultado" class="resultado"></div>
+      </div>
+
+      <div id="jurosSimples" class="page">
+        <h2><span class="material-symbols-outlined">local_shipping</span> Juros Simples - Financiamento de Caminhão</h2>
+        <p class="context-box">Calcule quanto você pagará de juros ao financiar um caminhão. Exemplo: Financiar R$ 80.000 com 1,5% ao mês por 60 meses.</p>
+        <p class="formula">J = C · i · t | M = C + J</p>
+        <div class="form-group">
+          <label>Valor do Financiamento (R$) - Preço do caminhão</label>
+          <input type="number" id="js-capital" min="0" step="0.01" value="80000">
+        </div>
+        <div class="form-group">
+          <label>Taxa de Juros Mensal (%)</label>
+          <input type="number" id="js-taxa" min="0" step="0.01" value="1.5">
+        </div>
+        <div class="form-group">
+          <label>Tempo de Cálculo</label>
+          <input type="number" id="js-tempo" min="0" step="1" value="6">
+        </div>
+        <button onclick="calcularJurosSimples()" class="btn-primary"><span class="material-symbols-outlined">calculate</span> Calcular</button>
+        <div id="js-resultado" class="resultado"></div>
+      </div>
+
+      <div id="eq1grau" class="page">
+        <h2><span class="material-symbols-outlined">trending_flat</span> Equação 1º Grau - Ponto de Equilíbrio</h2>
+        <p class="context-box">Descubra quantos fretes você precisa fazer no mês para cobrir os custos fixos. Exemplo: Custo fixo de R$ 3.000 e lucro por frete de R$ 200. Quantos fretes?</p>
+        <p class="formula">ax + b = 0 → x = -b/a</p>
+        <div class="form-group">
+          <label>Lucro por Frete (R$) - Coeficiente a</label>
+          <input type="number" id="eq1-a" step="0.01" value="200">
+        </div>
+        <div class="form-group">
+          <label>Custo Fixo Mensal (R$) - Coeficiente b (negativo)</label>
+          <input type="number" id="eq1-b" step="0.01" value="-3000">
+        </div>
+        <button onclick="calcularEq1Grau()" class="btn-primary"><span class="material-symbols-outlined">done</span> Resolver</button>
+        <div id="eq1-resultado" class="resultado"></div>
+      </div>
+
+      <div id="eq2grau" class="page">
+         <h2><span class="material-symbols-outlined">route</span> Equação 2º Grau - Otimização de Rotas</h2>
+        <p class="context-box">Analise o custo total versus distância. Exemplo: custo fixo + custo variável por km + custo de combustível exponencial.</p>
+        <p class="formula">ax² + bx + c = 0</p>
+        <div class="form-group">
+          <label>Custo por distância percorrida² — ex: desgaste de pneu e combustível que aumenta com a distância (a)</label>
+          <input type="number" id="eq2-a" step="0.01" value="0.5">
+        </div>
+        <div class="form-group">
+          <label>Custo ou desconto por cada KM rodado — negativo = desconto, positivo = custo extra (b)</label>
+          <input type="number" id="eq2-b" step="0.01" value="-50">
+        </div>
+        <div class="form-group">
+          <label>Custo fixo da rota — pedágio, diária do motorista, etc. (c)</label>
+          <input type="number" id="eq2-c" step="0.01" value="200">
+        </div>
+        <button onclick="calcularEq2Grau()" class="btn-primary"><span class="material-symbols-outlined">done</span> Calcular</button>
+        <div id="eq2-resultado" class="resultado"></div>
+      </div>
+
+      <div id="ineq1grau" class="page">
+        <h2><span class="material-symbols-outlined">check_circle</span> Inequação 1º Grau - Viabilidade de Frete</h2>
+        <p class="context-box">Descubra qual a distância mínima para o frete ser lucrativo. Exemplo: Frete ganha 10x a distância - 100 de custo > 0?</p>
+        <p class="formula">ax + b > 0</p>
+        <div class="form-group">
+          <label>Ganho por KM (a)</label>
+          <input type="number" id="ineq1-a" step="0.01" value="10">
+        </div>
+        <div class="form-group">
+          <label>Custo Fixo do Frete (b) - Negativo</label>
+          <input type="number" id="ineq1-b" step="0.01" value="-100">
+        </div>
+        <button onclick="calcularIneq1Grau()" class="btn-primary"><span class="material-symbols-outlined">done</span> Resolver</button>
+        <div id="ineq1-resultado" class="resultado"></div>
+      </div>
+
+      <div id="ineq2grau" class="page">
+        <h2><span class="material-symbols-outlined">bar_chart</span> Inequação 2º Grau - Faixa de Lucratividade</h2>
+        <p class="context-box">Encontre a faixa de distance em que o frete é lucrativo considerando custos variados.</p>
+        <p class="formula">ax² + bx + c > 0</p>
+        <div class="form-group">
+          <label>Coeficiente a (custo exponencial)</label>
+          <input type="number" id="ineq2-a" step="0.01" value="-0.1">
+        </div>
+        <div class="form-group">
+          <label>Ganho por KM (b)</label>
+          <input type="number" id="ineq2-b" step="0.01" value="8">
+        </div>
+        <div class="form-group">
+          <label>Lucro Total (c)</label>
+          <input type="number" id="ineq2-c" step="0.01" value="120">
+        </div>
+        <button onclick="calcularIneq2Grau()" class="btn-primary"><span class="material-symbols-outlined">done</span> Resolver</button>
+        <div id="ineq2-resultado" class="resultado"></div>
+      </div>
+
+      <div id="conjuntos" class="page">
+        <h2><span class="material-symbols-outlined">hub</span> Conjuntos - Operações com Rotas</h2>
+        <p class="context-box">Organize rotas, clientes e destinos. Exemplo: Clientes da Rota A: {1,2,3,4} | Clientes da Rota B: {3,4,5,6}</p>
+        <div class="form-group">
+          <label>Clientes Rota A (separado por vírgula)</label>
+          <input type="text" id="conj-a" value="1, 2, 3, 4">
+        </div>
+        <div class="form-group">
+          <label>Clientes Rota B (separado por vírgula)</label>
+          <input type="text" id="conj-b" value="3, 4, 5, 6">
+        </div>
+        <div class="form-group">
+          <label>Operação</label>
+          <select id="conj-op">
+            <option>União (A ∪ B)</option>
+            <option>Interseção (A ∩ B)</option>
+            <option>Diferença (A - B)</option>
+            <option>Diferença (B - A)</option>
+            <option>Diferença Simétrica (A ∆ B)</option>
+          </select>
+        </div>
+        <button onclick="calcularConjuntos()" class="btn-primary"><span class="material-symbols-outlined">calculate</span> Calcular</button>
+        <div id="conj-resultado" class="resultado"></div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <script src="assets/js/calc.js"></script>
+</body>
+</html>
